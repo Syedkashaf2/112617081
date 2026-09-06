@@ -23,8 +23,9 @@ int main()
 	       if (current > max )
 	       {
 		max = current;
+		n = i;
 	       }	       
 	}
-	cout << max << '\n';
+	cout << n << '\n';
 	return 0;
 }
