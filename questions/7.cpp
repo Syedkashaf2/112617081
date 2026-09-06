@@ -19,7 +19,7 @@ int main()
 
 	for ( int i{}; i < 5; i++)
 	{
-		current = votes[i];
+		current = vote_counts[i];
 	       if (current > max )
 	       {
 		max = current;
