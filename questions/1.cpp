@@ -17,7 +17,7 @@ int main()
 			valid_total += logs.at(i);
 	}
 
-	cout << valid_total<< '\n';
+	cout << valid_tota<< '\n';
 
 	return 0;
 }
