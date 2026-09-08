@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-	int k{1};
+	int k{};
 	vector<int> nums {0, 1, 0, 3, 12};
 
 	if (nums.size() == 0)
