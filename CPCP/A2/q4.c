@@ -4,7 +4,7 @@ int main() {
     char gen, qual;
     int yos, sal;
 
-    printf("Enter gender (m/f), years of service, qualification (g/p): ");
+    printf("Enter gender m/f, years, qualification g/p: ");
     scanf(" %c %d %c", &gen, &yos, &qual);
 
     if (gen == 'm' || gen == 'M') {
@@ -39,4 +39,4 @@ int main() {
 
     printf("Salary = %d\n", sal);
     return 0;
-}
+
