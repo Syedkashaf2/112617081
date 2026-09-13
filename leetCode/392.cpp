@@ -4,8 +4,6 @@
 using namespace std;
 
 bool isSubsequence(string s, string t) {
-  s = "abc";
-  t = "ahbgdc";
   int i{}, j{};
   bool is_sub{true};
 
