@@ -9,9 +9,9 @@ int minSubArray(int target, vector<int> &nums) {
 
   for (int i{}; i < nums.size(); i++) {
     currentSum += nums[i];
-    while (currentSum >= 7) {
-      currentSum = currentSum - nums[left];
+    while (currentSum >= target) {
       minLength = min(minLength, 1 + i - left);
+      currentSum = currentSum - nums[left];
       left++;
     }
   }
