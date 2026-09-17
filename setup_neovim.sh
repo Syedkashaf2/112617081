@@ -43,11 +43,40 @@ export PATH="$HOME/.local/bin:$PATH"
 # 2. Neovim itself (Ubuntu's apt repo build is usually too old for modern
 #    plugins, so we pull the latest stable release from the official PPA)
 # -----------------------------------------------------------------------
-echo "==> Installing latest stable Neovim..."
+echo "==> Removing any conflicting pre-existing Neovim installs..."
+# A snap install of nvim takes priority in PATH over /usr/bin/nvim from apt,
+# and silently leaves you on an old version even after the PPA install below.
+if command -v snap >/dev/null 2>&1 && snap list 2>/dev/null | grep -q '^nvim '; then
+  echo "    Found nvim installed via snap - removing it."
+  sudo snap remove nvim
+fi
+# Also drop any apt-installed nvim so the PPA version below is a clean reinstall,
+# not a no-op because a same-or-newer-looking version is already "installed".
+if dpkg -l neovim 2>/dev/null | grep -q '^ii'; then
+  echo "    Found nvim installed via apt - purging before reinstalling from PPA."
+  sudo apt purge -y neovim
+fi
+
+echo "==> Installing latest stable Neovim from PPA..."
 sudo add-apt-repository -y ppa:neovim-ppa/stable
 sudo apt update
 sudo apt install -y neovim
+
+echo "==> Verifying Neovim version..."
 nvim --version | head -n 1
+echo "    nvim resolves to: $(command -v nvim)"
+
+NVIM_MAJOR=$(nvim --version | head -n1 | grep -oP '(?<=v)\d+' | head -n1)
+NVIM_MINOR=$(nvim --version | head -n1 | grep -oP '(?<=v\d\.)\d+' | head -n1)
+if [ "${NVIM_MAJOR:-0}" -eq 0 ] && [ "${NVIM_MINOR:-0}" -lt 10 ]; then
+  echo ""
+  echo "ERROR: Neovim is still version 0.${NVIM_MINOR}, but the plugins below"
+  echo "require 0.10+. Something on this machine (a flatpak install, a manual"
+  echo "binary in ~/.local/bin, /usr/local/bin, etc.) is likely shadowing the"
+  echo "PPA build in PATH. Check with: which -a nvim"
+  echo "Aborting before installing plugins to avoid the same crash loop."
+  exit 1
+fi
 
 # -----------------------------------------------------------------------
 # 3. Config folder structure
