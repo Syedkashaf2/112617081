@@ -2,12 +2,12 @@
 
 int main() {
     int n, i = 1;
-    long long fact = 1;
+    int fact = 1;
     scanf("%d", &n);
     while (i <= n) {
         fact = fact * i;
         i++;
     }
-    printf("%lld\n", fact);
+    printf("%d\n", fact);
     return 0;
 }
