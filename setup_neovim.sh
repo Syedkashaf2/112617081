@@ -396,20 +396,41 @@ EOF
 # -----------------------------------------------------------------------
 cat << 'EOF' > "$NVIM_CONFIG/lua/plugins/treesitter.lua"
 return {
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  config = function()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = {
-        "c", "cpp", "python", "lua", "bash",
-        "markdown", "markdown_inline", "vim", "vimdoc",
-      },
-      sync_install = false,
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true },
-    })
-  end,
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        ensure_installed = {
+          "c", "cpp", "python", "lua", "bash",
+          "markdown", "markdown_inline", "vim", "vimdoc",
+          "json", "yaml", "toml", "html", "css",
+          "javascript", "typescript", "tsx",
+          "rust", "go", "dockerfile", "regex", "query", "diff",
+        },
+        sync_install = false,
+        auto_install = true,
+        highlight = { enable = true },
+        indent = { enable = true },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "<leader>ss",
+            node_incremental = "<leader>si",
+            scope_incremental = "<leader>sc",
+            node_decremental = "<leader>sd",
+          },
+        },
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "BufReadPost",
+    config = function()
+      require("treesitter-context").setup({ max_lines = 3 })
+    end,
+  },
 }
 EOF
 
@@ -431,7 +452,22 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "clangd", "pyright", "bashls", "lua_ls" },
+        ensure_installed = {
+          "clangd", "pyright", "bashls", "lua_ls",
+          "jsonls", "html", "cssls", "ts_ls", "marksman",
+        },
+      })
+    end,
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          "black", "stylua", "prettier", "shfmt",
+          "shellcheck", "pylint", "eslint_d",
+        },
       })
     end,
   },
@@ -493,6 +529,12 @@ return {
           },
         },
       })
+
+      lspconfig.jsonls.setup({ capabilities = capabilities, on_attach = on_attach })
+      lspconfig.html.setup({ capabilities = capabilities, on_attach = on_attach })
+      lspconfig.cssls.setup({ capabilities = capabilities, on_attach = on_attach })
+      lspconfig.ts_ls.setup({ capabilities = capabilities, on_attach = on_attach })
+      lspconfig.marksman.setup({ capabilities = capabilities, on_attach = on_attach })
 
       vim.diagnostic.config({
         virtual_text = true,
@@ -567,7 +609,206 @@ return {
 EOF
 
 # -----------------------------------------------------------------------
-# 14. Bootstrap plugins + treesitter parsers headlessly
+# 14. plugins/formatting.lua (conform.nvim + nvim-lint)
+# -----------------------------------------------------------------------
+cat << 'EOF' > "$NVIM_CONFIG/lua/plugins/formatting.lua"
+return {
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    keys = {
+      {
+        "<leader>fo",
+        function()
+          require("conform").format({ async = true, lsp_fallback = true })
+        end,
+        mode = { "n", "v" },
+        desc = "Format buffer",
+      },
+    },
+    opts = {
+      formatters_by_ft = {
+        python = { "black" },
+        lua = { "stylua" },
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        json = { "prettier" },
+        html = { "prettier" },
+        css = { "prettier" },
+        markdown = { "prettier" },
+        sh = { "shfmt" },
+      },
+      format_on_save = {
+        timeout_ms = 1500,
+        lsp_fallback = true,
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPost", "BufWritePost", "InsertLeave" },
+    config = function()
+      local lint = require("lint")
+      lint.linters_by_ft = {
+        python = { "pylint" },
+        sh = { "shellcheck" },
+        javascript = { "eslint_d" },
+        typescript = { "eslint_d" },
+      }
+      vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+    end,
+  },
+}
+EOF
+
+# -----------------------------------------------------------------------
+# 15. plugins/coding.lua (surround, comments highlighting, indent guides,
+#     colorizer, motions, cursorword highlight)
+# -----------------------------------------------------------------------
+cat << 'EOF' > "$NVIM_CONFIG/lua/plugins/coding.lua"
+return {
+  {
+    "kylechui/nvim-surround",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({})
+    end,
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = "BufReadPost",
+    config = function()
+      require("todo-comments").setup({})
+    end,
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = "BufReadPost",
+    config = function()
+      require("ibl").setup({
+        indent = { char = "│" },
+        scope = { enabled = true },
+      })
+    end,
+  },
+  {
+    "NvChad/nvim-colorizer.lua",
+    event = "BufReadPost",
+    config = function()
+      require("colorizer").setup({ "*" }, { css = true, names = false })
+    end,
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "s", function() require("flash").jump() end, mode = { "n", "x", "o" }, desc = "Flash jump" },
+      { "S", function() require("flash").treesitter() end, mode = { "n", "x", "o" }, desc = "Flash treesitter" },
+    },
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = "BufReadPost",
+    config = function()
+      require("illuminate").configure({ delay = 200 })
+    end,
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "Trouble",
+    keys = {
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
+      { "<leader>xq", "<cmd>Trouble qflist toggle<CR>", desc = "Quickfix (Trouble)" },
+    },
+    opts = {},
+  },
+}
+EOF
+
+# -----------------------------------------------------------------------
+# 16. plugins/navigation.lua (harpoon quick-file jumping)
+# -----------------------------------------------------------------------
+cat << 'EOF' > "$NVIM_CONFIG/lua/plugins/navigation.lua"
+return {
+  "ThePrimeagen/harpoon",
+  branch = "harpoon2",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  config = function()
+    local harpoon = require("harpoon")
+    harpoon:setup()
+
+    vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end, { desc = "Harpoon add file" })
+    vim.keymap.set("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon menu" })
+    vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end)
+    vim.keymap.set("n", "<leader>h2", function() harpoon:list():select(2) end)
+    vim.keymap.set("n", "<leader>h3", function() harpoon:list():select(3) end)
+    vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end)
+  end,
+}
+EOF
+
+# -----------------------------------------------------------------------
+# 17. plugins/terminal.lua (toggleterm)
+# -----------------------------------------------------------------------
+cat << 'EOF' > "$NVIM_CONFIG/lua/plugins/terminal.lua"
+return {
+  "akinsho/toggleterm.nvim",
+  version = "*",
+  keys = { "<leader>t", [[<C-\>]] },
+  config = function()
+    require("toggleterm").setup({
+      open_mapping = [[<C-\>]],
+      direction = "float",
+      shade_terminals = true,
+    })
+    vim.keymap.set("n", "<leader>t", ":ToggleTerm<CR>", { noremap = true, silent = true, desc = "Toggle terminal" })
+  end,
+}
+EOF
+
+# -----------------------------------------------------------------------
+# 18. plugins/dashboard.lua (start screen)
+# -----------------------------------------------------------------------
+cat << 'EOF' > "$NVIM_CONFIG/lua/plugins/dashboard.lua"
+return {
+  "goolord/alpha-nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  event = "VimEnter",
+  config = function()
+    local dashboard = require("alpha.themes.dashboard")
+    dashboard.section.header.val = {
+      "                                                    ",
+      "  ███╗   ██╗██╗   ██╗██╗███╗   ███╗                 ",
+      "  ████╗  ██║██║   ██║██║████╗ ████║                 ",
+      "  ██╔██╗ ██║██║   ██║██║██╔████╔██║                 ",
+      "  ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║                 ",
+      "  ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║                 ",
+      "  ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝                 ",
+      "                                                    ",
+    }
+    dashboard.section.buttons.val = {
+      dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
+      dashboard.button("n", "  New file", ":ene <BAR> startinsert<CR>"),
+      dashboard.button("g", "  Live grep", ":Telescope live_grep<CR>"),
+      dashboard.button("r", "  Recent files", ":Telescope oldfiles<CR>"),
+      dashboard.button("e", "  File explorer", ":NvimTreeToggle<CR>"),
+      dashboard.button("q", "  Quit", ":qa<CR>"),
+    }
+    require("alpha").setup(dashboard.opts)
+  end,
+}
+EOF
+
+# -----------------------------------------------------------------------
+# 19. Bootstrap plugins + treesitter parsers headlessly
 # -----------------------------------------------------------------------
 echo "==> Syncing plugins headlessly (this can take a minute)..."
 nvim --headless "+Lazy! sync" +qa
@@ -588,5 +829,11 @@ echo "    first real launch. Run :Mason to watch progress."
 echo "  - Run 'source ~/.bashrc' (or restart your shell) so the"
 echo "    ~/.local/bin PATH update (needed for the fd symlink) takes effect."
 echo "  - Leader key is <Space>. Try <Space>ff (find files), <Space>fg"
-echo "    (live grep), <Space>e (file tree), <Space>ff, K (hover docs),"
-echo "    gd (go to definition), <Space>ca (code actions), <Space>rn (rename)."
+echo "    (live grep), <Space>e (file tree), K (hover docs), gd (go to"
+echo "    definition), <Space>ca (code actions), <Space>rn (rename)."
+echo "  - New this round: <Space>fo formats the buffer (auto-formats on"
+echo "    save too); s / S are Flash jump / Flash treesitter jump;"
+echo "    <Space>ha / <Space>hh / <Space>h1-4 are Harpoon add/menu/jump;"
+echo "    Ctrl-\\ (or <Space>t) opens a floating terminal; <Space>xx opens"
+echo "    the Trouble diagnostics list. The dashboard shows on startup"
+echo "    with no file open."
