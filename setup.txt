@@ -1,0 +1,18 @@
+# Bash & Zsh Configs
+ln -s ~/112617081/dotfiles/.bashrc ~/.bashrc
+ln -s ~/112617081/dotfiles/.bash_profile ~/.bash_profile
+ln -s ~/112617081/dotfiles/.zshrc ~/.zshrc
+ln -s ~/112617081/dotfiles/.p10k.zsh ~/.p10k.zsh
+ln -s ~/112617081/dotfiles/.shell.pre-oh-my-zsh ~/.shell.pre-oh-my-zsh
+
+# KANG Banners & Scripts
+ln -s ~/112617081/dotfiles/.kang_banner ~/.kang_banner
+ln -s ~/112617081/dotfiles/banner.sh ~/banner.sh
+
+# Git & Input configs
+ln -s ~/112617081/dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/112617081/dotfiles/.inputrc ~/.inputrc
+
+# Neovim (Ensure .config exists first)
+mkdir -p ~/.config
+ln -s ~/112617081/dotfiles/.config/nvim ~/.config/nvim
