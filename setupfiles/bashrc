@@ -1,0 +1,94 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+# ---------------------------------------------------------
+# 1. NON-INTERACTIVE SHELL CHECK (MUST BE AT THE TOP)
+# ---------------------------------------------------------
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# ---------------------------------------------------------
+# 2. SHELL OPTIONS & HISTORY MANAGEMENT
+# ---------------------------------------------------------
+HISTCONTROL=ignoreboth
+shopt -s histappend
+HISTSIZE=10000        # Increased for better memory
+HISTFILESIZE=20000
+HISTTIMEFORMAT="%F %T " # Shows time in history command
+PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND:-}" # Sync history across tabs
+
+shopt -s checkwinsize
+shopt -s cdspell      # Autocorrects typo in directory names
+shopt -s autocd       # Type directory name to cd into it
+shopt -s globstar     # Enables ** for recursive matching
+
+# Case-insensitive tab completion
+bind "set completion-ignore-case on" 2>/dev/null
+
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# ---------------------------------------------------------
+# 3. ALIASES & COLOR SETUP
+# ---------------------------------------------------------
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# ---------------------------------------------------------
+# 4. BASH COMPLETION
+# ---------------------------------------------------------
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# ---------------------------------------------------------
+# 5. UI, BANNER & PROMPT INITIALIZATION
+# ---------------------------------------------------------
+clear # Now safe to clear screen here
+
+# Display primary custom banner (Consolidated)
+if [ -f "$HOME/.kang_banner" ]; then
+    cat "$HOME/.kang_banner"
+else
+    # Fallback KANG Banner if file is missing
+    if command -v figlet &> /dev/null && command -v lolcat &> /dev/null; then
+        figlet -f slant "KANG" | lolcat
+        echo -e "\e[1;35m───────────────────────────────────────────────\e[0m"
+        echo -e "\e[1;32m  SYSTEM INITIALIZED \e[0m| \e[1;33mCustomized by KANG\e[0m"
+        echo -e "\e[1;35m───────────────────────────────────────────────\e[0m\n"
+    fi
+fi
+
+# Execute supplementary banner logic ONCE (removed spam)
+if [ -f "$HOME/banner.sh" ]; then
+    bash ~/banner.sh
+fi
+
+# Load System Info (Optional: Comment out if startup is slow)
+if command -v fastfetch &> /dev/null; then
+    fastfetch
+fi
+
+# Initialize Starship Prompt (Replaces standard PS1 completely)
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash)"
+fi
