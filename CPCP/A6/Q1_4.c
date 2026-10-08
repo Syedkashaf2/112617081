@@ -4,6 +4,7 @@ int main()
     int a[100], n, i, large, small, even = 0, odd = 0;
     float sum = 0, avg;
     scanf("%d", &n);
+  printf("==========================\n");
     for (i = 0; i < n; i++)
     {
         scanf("%d", &a[i]);
@@ -23,9 +24,10 @@ int main()
             odd++;
     }
     avg = sum / n;
+  printf("==========================\n");
     printf("Largest = %d\n", large);
     printf("Smallest = %d\n", small);
     printf("Average = %f\n", avg);
-    printf("Even = %d\nOdd = %d", even, odd);
+    printf("Even = %d\nOdd = %d\n", even, odd);
     return 0;
 }

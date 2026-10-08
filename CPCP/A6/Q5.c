@@ -16,11 +16,12 @@ int main()
             slarge = large;
             large = a[i];
         }
-        else if (a[i] > slarge && a[i] != large)
+        else if (a[i] > slarge)
         {
             slarge = a[i];
         }
+
     }
-    printf("Second largest = %d", slarge);
+    printf("Second largest = %d\n", slarge);
     return 0;
 }
