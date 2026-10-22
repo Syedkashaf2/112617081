@@ -37,9 +37,9 @@ int main() {
     }
 
     if (isIdentity)
-        printf("The matrix is an identity matrix.\n");
+        printf("matrix is identity matrix.\n");
     else
-        printf("The matrix is not an identity matrix.\n");
+        printf("matrix is not identity matrix.\n");
 
     return 0;
 }

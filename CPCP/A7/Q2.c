@@ -37,6 +37,7 @@ int main() {
         }
         printf("\n");
     }
+    
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -48,7 +49,6 @@ int main() {
         if (!areEqual) break;
     }
 
-    printf("The Matrices can be compared :\n");
     if (areEqual)
         printf("These two matrices are equal.\n");
     else

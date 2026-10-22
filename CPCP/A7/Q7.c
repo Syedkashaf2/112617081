@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    char str1[50] = "Hello";
+    char str1[] = "Hello";
     char str2[] = "World!";
     int i = 0, j = 0;
 
