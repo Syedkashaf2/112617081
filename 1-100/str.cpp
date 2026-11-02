@@ -26,10 +26,17 @@ bool isPalindrome(const string &s) {
       return false;
     }
 
-    // next pair
+    // Next pair
     left++;
     right--;
   }
 
   return true;
+}
+
+int main()  {
+
+  string s = "a--plle';''.'.ell-[';]pa";
+  cout << isPalindrome(s) << '\n';
+  return 0;
 }

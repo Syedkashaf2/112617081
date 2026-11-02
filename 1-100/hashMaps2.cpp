@@ -17,7 +17,9 @@ int main() {
   cout << test->second << "\n"; // Output: 19
 
   // 3. Update Data (O(1) Time)
-  ages["Kashaf"] = 20; // Key already exist thi, toh value overwrite ho jayegi.
+  ages["Kashaf"] = 20; // Key already exist kar rhi thi, toh value overwrite ho jayegi.
+  cout << test->first << "\n";  // Output: Kashaf
+  cout << test->second << "\n"; // Output: 19
 
   //====================================TRAP===================================================
 
@@ -35,8 +37,7 @@ int main() {
     cout << "Ali is in the map!\n";
   }
 
-  auto it = ages1.find(
-      "Ali"); // 'auto' use kiya kyunki iterator ki type bohot lambi hoti hai
+  auto it = ages1.find("Ali"); // 'auto' use kiya kyunki iterator ki type bohot lambi hoti hai
 
   if (it != ages1.end()) {
     cout << "Found! Value is: " << it->second << '\n';

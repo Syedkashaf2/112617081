@@ -12,7 +12,7 @@ using namespace std;
 
 // MODULO OPERATOR(%): HASH CODE is usaually much larger then the number of
 // available buckets. the modulo operator compresses the code to a valid index
-// within the bucket array; ( Indedx = Hashcode % NumberOfBuckets)
+// within the bucket array; ( Index = Hashcode % NumberOfBuckets)
 
 int main() {
   // Key type is string, Value type is int
