@@ -43,7 +43,7 @@ bool isAnagram(const string &s, const string &t) {
 
 int main() {
   string s = "apple";
-  string t = "pleap"; // I made it a valid anagram for testing
+  string t = "pleap";
 
   if (isAnagram(s, t)) {
     cout << "Yes, they are anagrams!\n";
