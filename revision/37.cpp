@@ -4,24 +4,27 @@
 using namespace std;
 
 class Database {
-  string dbName;
-  int connectionID;
+private:
+    string dbName;
+    int connectionID;
 
-  Database() : dbName("LocalDB"), connectionID(0) {
-    cout << "Connected to Default DB\n";
-  }
+public: // FIX 1: Put BOTH constructors under 'public:'!
+    Database() : dbName("LocalDB"), connectionID(0) {
+        cout << "Connected to Default DB\n";
+    }
 
-public:
-  Database(string name, int id) {
-    name = name;
-    connectionID = id;
-    cout << "Connected to " << dbName << '\n';
-  }
+    // FIX 2: Use initializer list ': dbName(name), connectionID(id)'!
+    Database(string name, int id) : dbName(name), connectionID(id) {
+        cout << "Connected to " << dbName << '\n';
+    }
+
+    void closeConnection(); // Declared inside the class (like revision/28.cpp)
 };
 
-void closeConnection() {
-  connectionID = -1;
-  cout << "Connection manually closed.\n";
+// FIX 3: Use 'Database::' to tell C++ this function belongs to class Database!
+void Database::closeConnection() {
+    connectionID = -1;
+    cout << "Connection manually closed.\n";
 }
 
 int main() {
