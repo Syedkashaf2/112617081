@@ -1,18 +1,15 @@
 #include <stdio.h>
 
-void printArray(int arr[], int index, int size) {
-    if (index == size) {
-        return;
+int sumOfDigits(int num) {
+    if (num == 0) {
+        return 0;
     }
-    printf("%d ", arr[index]);
-    printArray(arr, index + 1, size);
+    return (num % 10) + sumOfDigits(num / 10);
 }
 
 int main() {
-    int arr[] = {10, 20, 30, 40, 50};
-    int size = 5;
-    printf("Array elements: ");
-    printArray(arr, 0, size);
-    printf("\n");
+    int num = 1234;
+    int result = sumOfDigits(num);
+    printf("Sum of digits of %d is %d\n", num, result);
     return 0;
 }

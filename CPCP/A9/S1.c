@@ -1,15 +1,19 @@
 #include <stdio.h>
 
-int power(int x, int y) {
-    if (y == 0) {
-        return 1;
+int findMax(int arr[], int size) {
+    int max = arr[0];
+    int i;
+    for (i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
     }
-    return x * power(x, y - 1);
+    return max;
 }
 
 int main() {
-    int x = 2, y = 5;
-    int result = power(x, y);
-    printf("%d raised to %d is %d\n", x, y, result);
+    int arr[] = {10, 45, 23, 89, 12};
+    int size = 5;
+    printf("Largest element is %d\n", findMax(arr, size));
     return 0;
 }

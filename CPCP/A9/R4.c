@@ -1,15 +1,18 @@
 #include <stdio.h>
 
-int sumArray(int arr[], int size) {
-    if (size <= 0) {
-        return 0;
+int gcd(int a, int b) {
+    if (b == 0) {
+        return a;
     }
-    return arr[size - 1] + sumArray(arr, size - 1);
+    return gcd(b, a % b);
+}
+
+int lcm(int a, int b) {
+    return (a * b) / gcd(a, b);
 }
 
 int main() {
-    int arr[] = {1, 2, 3, 4, 5};
-    int size = 5;
-    printf("Sum of array is %d\n", sumArray(arr, size));
+    int a = 12, b = 18;
+    printf("LCM of %d and %d is %d\n", a, b, lcm(a, b));
     return 0;
 }
