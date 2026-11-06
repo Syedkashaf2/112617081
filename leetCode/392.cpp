@@ -3,30 +3,34 @@
 #include <vector>
 using namespace std;
 
-bool isSubsequence(string s, string t) {
-  int i{}, j{};
-  bool is_sub{true};
+bool isSubsequence(string s, string t)
+{
+    int i{}, j{};
+    bool is_sub{true};
 
-  while (i < s.length() && j < t.length()) {
-    if (s[i] == t[j]) {
-      i++;
+    while (i < s.length() && j < t.length())
+    {
+        if (s[i] == t[j])
+        {
+            i++;
+        }
+        j++;
     }
-    j++;
-  }
-  return (i == s.length());
+    return (i == s.length());
 }
 
-int main() {
-  string s{};
-  string t{};
+int main()
+{
+    string s{};
+    string t{};
 
-  cout << "Enter the sum string : ";
-  cin >> s;
+    cout << "Enter the sum string : ";
+    cin >> s;
 
-  cout << "Enter the main string : ";
-  cin >> t;
+    cout << "Enter the main string : ";
+    cin >> t;
 
-  cout << isSubsequence(s, t) << '\n';
+    cout << isSubsequence(s, t) << '\n';
 
-  return 0;
+    return 0;
 }

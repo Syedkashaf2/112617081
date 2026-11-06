@@ -5,11 +5,7 @@ using namespace std;
 
 int main()
 {
-	vector<int> 
+    vector<int>
 
-
-
-	return 0;
+        return 0;
 }
-
-

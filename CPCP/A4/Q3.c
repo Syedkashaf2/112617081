@@ -1,10 +1,12 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     float sum = 0.0;
     float fact = 1.0;
 
-    for (int i = 1; i <= 7; i++) {
+    for (int i = 1; i <= 7; i++)
+    {
         fact = fact * i;
         sum = sum + (i / fact);
     }

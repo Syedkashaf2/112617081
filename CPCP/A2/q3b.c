@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int m1, m2, m3, m4, m5;
     float per;
 
@@ -9,16 +10,20 @@ int main() {
 
     per = (m1 + m2 + m3 + m4 + m5) / 5.0;
 
-    if (per >= 60) {
+    if (per >= 60)
+    {
         printf("First division\n");
     }
-    if (per >= 50 && per < 60) {
+    if (per >= 50 && per < 60)
+    {
         printf("Second division\n");
     }
-    if (per >= 40 && per < 50) {
+    if (per >= 40 && per < 50)
+    {
         printf("Third division\n");
     }
-    if (per < 40) {
+    if (per < 40)
+    {
         printf("Fail\n");
     }
 

@@ -1,12 +1,14 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int num, originalNum, rev = 0, rem;
     printf("Enter an integer: ");
     scanf("%d", &num);
 
     originalNum = num;
-    while (num > 0) {
+    while (num > 0)
+    {
         rem = num % 10;
         rev = rev * 10 + rem;
         num /= 10;

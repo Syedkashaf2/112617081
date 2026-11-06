@@ -1,17 +1,20 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     char str1[] = "Hello";
     char str2[] = "World!";
     int i = 0, j = 0;
 
-    while (str1[i] != '\0') {
+    while (str1[i] != '\0')
+    {
         i++;
     }
 
     str1[i++] = ' ';
 
-    while (str2[j] != '\0') {
+    while (str2[j] != '\0')
+    {
         str1[i] = str2[j];
         i++;
         j++;

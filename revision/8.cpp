@@ -1,19 +1,19 @@
-#include <iostream> 
+#include <iostream>
 #include <vector>
 
 using namespace std;
 
-int main ()
+int main()
 {
-	vector <char> vovels {'a', 'e', 'i', 'o'};
+    vector<char> vovels{'a', 'e', 'i', 'o'};
 
-	vovels.push_back('u');
-	
-	 cout << "Last vovel added : " << vovels.at(4) << '\n'	;
+    vovels.push_back('u');
 
-	 vovels.pop_back();
+    cout << "Last vovel added : " << vovels.at(4) << '\n';
 
-	 cout << "Size after pop : " << vovels.size() << '\n';
+    vovels.pop_back();
 
-	return 0;
+    cout << "Size after pop : " << vovels.size() << '\n';
+
+    return 0;
 }

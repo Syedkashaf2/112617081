@@ -1,10 +1,12 @@
 #include <stdio.h>
 
-float prod(float a, int b) {
+float prod(float a, int b)
+{
     return a * b;
 }
 
-int main() {
+int main()
+{
     float x, res;
     int y;
     scanf("%f %d", &x, &y);

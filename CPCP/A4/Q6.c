@@ -1,12 +1,17 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int i;
 
-    for (i = 0; i < 2000; i++) {
-        if (i % 2 == 0) {
+    for (i = 0; i < 2000; i++)
+    {
+        if (i % 2 == 0)
+        {
             printf("%c", 4);
-        } else {
+        }
+        else
+        {
             printf("%c", 3);
         }
     }

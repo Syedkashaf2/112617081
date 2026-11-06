@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int num;
     int temp;
     int rem;
@@ -11,7 +12,8 @@ int main() {
     scanf("%d", &num);
 
     temp = num;
-    while (temp > 0) {
+    while (temp > 0)
+    {
         rem = temp % 8;
         oct = oct + rem * place;
         place = place * 10;
@@ -21,5 +23,4 @@ int main() {
     printf("Octal equivalent: %d\n", oct);
 
     return 0;
-
 }

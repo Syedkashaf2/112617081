@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int cur, join, diff;
 
     printf("Enter current year and joining year: ");
@@ -8,7 +9,8 @@ int main() {
 
     diff = cur - join;
 
-    if (diff > 3) {
+    if (diff > 3)
+    {
         printf("Bonus of Rs. 2500 awarded\n");
     }
 

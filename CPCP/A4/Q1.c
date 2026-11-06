@@ -1,21 +1,28 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int num;
     int pos = 0;
     int neg = 0;
     int zero = 0;
     char ch;
 
-    do {
+    do
+    {
         printf("Enter a number: ");
         scanf("%d", &num);
 
-        if (num > 0) {
+        if (num > 0)
+        {
             pos++;
-        } else if (num < 0) {
+        }
+        else if (num < 0)
+        {
             neg++;
-        } else {
+        }
+        else
+        {
             zero++;
         }
 

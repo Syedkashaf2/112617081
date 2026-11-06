@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     char text[100];
 
     printf("Enter a string: ");

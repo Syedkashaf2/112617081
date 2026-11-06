@@ -3,18 +3,21 @@
 #include <vector>
 using namespace std;
 
-class Database {
-private:
+class Database
+{
+  private:
     string dbName;
     int connectionID;
 
-public: // FIX 1: Put BOTH constructors under 'public:'!
-    Database() : dbName("LocalDB"), connectionID(0) {
+  public: // FIX 1: Put BOTH constructors under 'public:'!
+    Database() : dbName("LocalDB"), connectionID(0)
+    {
         cout << "Connected to Default DB\n";
     }
 
     // FIX 2: Use initializer list ': dbName(name), connectionID(id)'!
-    Database(string name, int id) : dbName(name), connectionID(id) {
+    Database(string name, int id) : dbName(name), connectionID(id)
+    {
         cout << "Connected to " << dbName << '\n';
     }
 
@@ -22,16 +25,18 @@ public: // FIX 1: Put BOTH constructors under 'public:'!
 };
 
 // FIX 3: Use 'Database::' to tell C++ this function belongs to class Database!
-void Database::closeConnection() {
+void Database::closeConnection()
+{
     connectionID = -1;
     cout << "Connection manually closed.\n";
 }
 
-int main() {
-  Database myDB;
+int main()
+{
+    Database myDB;
 
-  Database serverDB("CloudSDB", 404);
+    Database serverDB("CloudSDB", 404);
 
-  myDB.closeConnection();
-  return 0;
+    myDB.closeConnection();
+    return 0;
 }

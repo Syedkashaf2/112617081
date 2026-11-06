@@ -5,26 +5,30 @@
 #include <string>
 using namespace std;
 
-class Car {
-private:
-  string brand;
-  int year;
-  int topSpeed;
+class Car
+{
+  private:
+    string brand;
+    int year;
+    int topSpeed;
 
-  /*================OLD CODE======================
+    /*================OLD CODE======================
+    public:
+        Car(string b, int y, int ts)    {
+            brand = b;
+            year = y;
+            topSpeed = ts;
+        }
+    ==================NEW CODE=====================*/
+
   public:
-      Car(string b, int y, int ts)    {
-          brand = b;
-          year = y;
-          topSpeed = ts;
-      }
-  ==================NEW CODE=====================*/
-
-public:
-  Car(string b, int y, int ts) : brand(b), year(y), topSpeed(ts) {}
+    Car(string b, int y, int ts) : brand(b), year(y), topSpeed(ts)
+    {
+    }
 };
 
-int main() {
-  Car c1("lambo", 2026, 120);
-  return 0;
+int main()
+{
+    Car c1("lambo", 2026, 120);
+    return 0;
 }

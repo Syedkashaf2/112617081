@@ -14,38 +14,42 @@ using namespace std;
 // available buckets. the modulo operator compresses the code to a valid index
 // within the bucket array; ( Index = Hashcode % NumberOfBuckets)
 
-int main() {
-  // Key type is string, Value type is int
-  unordered_map<string, int> ageMap;
+int main()
+{
+    // Key type is string, Value type is int
+    unordered_map<string, int> ageMap;
 
-  // 1. Insertion & Updating: O(1) Average
-  ageMap["Kashaf"] = 19;
-  ageMap["Twin1"] = 5;
+    // 1. Insertion & Updating: O(1) Average
+    ageMap["Kashaf"] = 19;
+    ageMap["Twin1"] = 5;
 
-  // 2. Accessing: O(1) Average
-  int myAge = ageMap["Kashaf"];
+    // 2. Accessing: O(1) Average
+    int myAge = ageMap["Kashaf"];
 
-  // cout << &myAge["Kashaf"] << '\n';
-  // cout << &myAge["Twin1"] << '\n';
-  cout << myAge["Kashaf"] << '\n';
-  cout << myAge["Twin1"] << '\n';
+    // cout << &myAge["Kashaf"] << '\n';
+    // cout << &myAge["Twin1"] << '\n';
+    cout << myAge["Kashaf"] << '\n';
+    cout << myAge["Twin1"] << '\n';
 
-  // TRAP!
-  if (ageMap["Nobody"] == 0) {
-    // This condition might be true, BUT you just accidentally added "Nobody" to
-    // the map! This wastes memory and corrupts your data.
-  }
+    // TRAP!
+    if (ageMap["Nobody"] == 0)
+    {
+        // This condition might be true, BUT you just accidentally added "Nobody" to
+        // the map! This wastes memory and corrupts your data.
+    }
 
-  // The Correct Way (Existence check only)
-  if (ageMap.count("Kashaf") > 0) {
-    // It exists!
-  }
+    // The Correct Way (Existence check only)
+    if (ageMap.count("Kashaf") > 0)
+    {
+        // It exists!
+    }
 
-  // The Professional Way (Check and retrieve in one O(1) operation)
-  auto it = ageMap.find("Kashaf");
-  if (it != ageMap.end()) {
-    cout << it->second; // 'first' is the key, 'second' is the value
-  }
+    // The Professional Way (Check and retrieve in one O(1) operation)
+    auto it = ageMap.find("Kashaf");
+    if (it != ageMap.end())
+    {
+        cout << it->second; // 'first' is the key, 'second' is the value
+    }
 
-  return 0;
+    return 0;
 }

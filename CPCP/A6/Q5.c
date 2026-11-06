@@ -20,7 +20,6 @@ int main()
         {
             slarge = a[i];
         }
-
     }
     printf("Second largest = %d\n", slarge);
     return 0;

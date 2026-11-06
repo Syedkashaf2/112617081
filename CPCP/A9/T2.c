@@ -2,7 +2,8 @@
 
 int globalVar = 10;
 
-void testVariables() {
+void testVariables()
+{
     auto int autoVar = 10;
     static int staticVar = 10;
     register int regVar = 10;
@@ -15,9 +16,11 @@ void testVariables() {
     printf("auto = %d, static = %d, register = %d, global = %d\n", autoVar, staticVar, regVar, globalVar);
 }
 
-int main() {
+int main()
+{
     int i;
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 3; i++)
+    {
         testVariables();
     }
     return 0;

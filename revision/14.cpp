@@ -3,17 +3,17 @@
 
 using namespace std;
 
-int main ()
+int main()
 {
-	int count{10}, result{}, result2{};
+    int count{10}, result{}, result2{};
 
-	result = ++count ;
+    result = ++count;
 
-	cout << "Result is : " << result << '\n';
+    cout << "Result is : " << result << '\n';
 
-	result2 = count++ ;
+    result2 = count++;
 
-	cout << "Result is : " << result2 << '\n';
-	
-	return 0;
+    cout << "Result is : " << result2 << '\n';
+
+    return 0;
 }

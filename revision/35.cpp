@@ -3,21 +3,32 @@
 #include <vector>
 using namespace std;
 
-class Soldier {
-  string name;
+class Soldier
+{
+    string name;
 
-public:
-  Soldier(string n) : name(n) { cout << name << " is borm\n"; }
+  public:
+    Soldier(string n) : name(n)
+    {
+        cout << name << " is borm\n";
+    }
 
-  ~Soldier() { cout << name << " dies.\n"; }
+    ~Soldier()
+    {
+        cout << name << " dies.\n";
+    }
 };
 
-void battle() { Soldier s2("Bravo"); }
+void battle()
+{
+    Soldier s2("Bravo");
+}
 
-int main() {
-  Soldier s1("Alpha");
-  battle();
+int main()
+{
+    Soldier s1("Alpha");
+    battle();
 
-  Soldier s3("Charlie");
-  return 0;
+    Soldier s3("Charlie");
+    return 0;
 }

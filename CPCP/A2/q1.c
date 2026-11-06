@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int qty;
     float price, tot, dis;
 
@@ -9,7 +10,8 @@ int main() {
 
     tot = qty * price;
 
-    if (qty > 1000) {
+    if (qty > 1000)
+    {
         dis = tot * 0.10;
         tot = tot - dis;
     }
