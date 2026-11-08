@@ -16,6 +16,7 @@ int removeDuplicates(vector<int> &nums)
             k++;
         }
     }
+    //return slow + 1;
     return k;
 }
 int main()
